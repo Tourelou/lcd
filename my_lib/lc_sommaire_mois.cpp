@@ -66,7 +66,7 @@ void LivreComptable::sommaireMois() {
 		int pad = padDesc;
 		twistAccent(t.Description.c_str(), pad);
 
-		std::cout << "│ " << t.Date << " │ " << std::setw(pad) << std::left << t.Description << " │ ";
+		std::cout << "│ " << t.Date << " │ " << std::setw(pad) << std::left << t.Description.substr(0, pad) << " │ ";
 
 		if (t.Type == "Virement" || t.Type == "Paiement") {
 			if(selection == t.Catégorie) t.Type = "Crédit";
