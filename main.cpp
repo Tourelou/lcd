@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <unistd.h>	// chdir, getpid
+#include <sys/ioctl.h>
 #include <libgen.h>	// dirname
 #include <ctime>
 #ifdef __APPLE__
@@ -15,6 +16,8 @@ LivreComptable livre;	// LE livre de comptes
 bool cbackPassage = false;	// Sommes-nous déjà passé dans callback
 std::string reponse = "";	// Pour recueillir l'input usager
 int choix = 0;	// atoi() de reponse
+
+std::string ver = "1.05";
 
 int chCurrDir(const char *path) {
 	char resolved_path[PATH_MAX];
@@ -53,12 +56,35 @@ int get_cmd_path(char *path) {
 	else return 10;
 }
 
+bool termSize() {
+	struct winsize w;
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+
+	if (w.ws_col >= 112) return true;
+
+	std::cout << "Largeur: " << w.ws_col << ", Hauteur: " << w.ws_row << std::endl;
+	std::cout << "Un peu court pour afficher sur le terminal.\nUn minimum de 112 carctères est necessaire.\n";
+	std::cout << "Appuyez sur «Enter» une fois fait. ";
+	std::cin.get();
+
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+	std::cout << "Largeur: " << w.ws_col << ", Hauteur: " << w.ws_row << std::endl;
+	if (w.ws_col >= 112) return true;
+	else return false;
+}
+
 int main(int argc, char const *argv[]) {
 
 	std::string lcdBookName = "";
 	std::string reponse;
 	bool nouveau = false;
 	char current_dir[PATH_MAX];
+
+	if(!termSize()) return 2;
+
+	std::cout << "--------------------------------------------------------\n";
+	std::cout << "----   lcd  par Daniel Vaillancourt, version " << ver  << "   ----\n";
+	std::cout << "--------------------------------------------------------\n";
 
 	switch (argc) {
 		case 1: {
@@ -164,8 +190,7 @@ int main(int argc, char const *argv[]) {
 										"14- Sommaire de comptes"
 										};
 
-	std::cout << "\n*************** Livre comptable à Daniel ***************\n"
-				<< "--------------------------------------------------------" << std::endl;
+	std::cout << "--------------------------------------------------------" << std::endl;
 	livre.printAllComptes();
 
 	while (true) {
