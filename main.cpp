@@ -17,7 +17,7 @@ bool cbackPassage = false;	// Sommes-nous déjà passé dans callback
 std::string reponse = "";	// Pour recueillir l'input usager
 int choix = 0;	// atoi() de reponse
 
-std::string ver = "1.05";
+std::string ver = "2025-02-18";
 
 int chCurrDir(const char *path) {
 	char resolved_path[PATH_MAX];
@@ -83,7 +83,7 @@ int main(int argc, char const *argv[]) {
 	if(!termSize()) return 2;
 
 	std::cout << "--------------------------------------------------------\n";
-	std::cout << "----   lcd  par Daniel Vaillancourt, version " << ver  << "   ----\n";
+	std::cout << "--- lcd  par Daniel Vaillancourt, version " << ver  << " ---\n";
 	std::cout << "--------------------------------------------------------\n";
 
 	switch (argc) {
