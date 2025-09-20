@@ -6,7 +6,9 @@
 #include "classLivreComptable.hpp"
 
 void LivreComptable::questionBD() {
-	int total = 0;
+	int total_credit = 0;
+	int total_debit = 0;
+	int total_virement = 0;
 
 	std::string requete = "SELECT * FROM 'Transactions' WHERE ";
 	
@@ -23,12 +25,19 @@ void LivreComptable::questionBD() {
 	incantationSQL(requete, "setQuestion2mem");
 	printTransactions(TMP_TRANSACTIONS);
 
-	for (auto t : TMP_TRANSACTIONS) total += atoi(t.Montant.c_str());
-	if (total != 0) {
-		std::cout << "┌─────────────────────────────────────────────┬─────────────┐\n"
+	for (auto t : TMP_TRANSACTIONS) {
+		if (t.Type == "Dépôt" || t.Type == "Crédit") total_credit += atoi(t.Montant.c_str());
+		if (t.Type == "Achat" || t.Type == "Débit") total_debit += atoi(t.Montant.c_str());
+		if (t.Type == "Paiement" || t.Type == "Virement") total_virement += atoi(t.Montant.c_str());
+	}
+	if (total_credit != 0 || total_debit != 0 || total_virement != 0) {
+		std::cout << "                                                   Crédit         Débit      Virement\n"
+				<< "┌─────────────────────────────────────────────┬─────────────┬─────────────┬─────────────┐\n"
 				<< "│ Total des éléments de la liste en requête   │ $ "
-				<< std::right << std::setw(9) << cents2dollars(std::to_string(total)) << " │\n"
-				<< "└─────────────────────────────────────────────┴─────────────┘" << std::endl;
+				<< std::right << std::setw(9) << cents2dollars(std::to_string(total_credit)) << " │ $ "
+				<< std::right << std::setw(9) << cents2dollars(std::to_string(total_debit)) << " │ $ "
+				<< std::right << std::setw(9) << cents2dollars(std::to_string(total_virement)) << " │\n"
+				<< "└─────────────────────────────────────────────┴─────────────┴─────────────┴─────────────┘" << std::endl;
 	}
 }
 void LivreComptable::fullQuestionBD() {
