@@ -61,6 +61,7 @@
 		~LivreComptable();
 	// lc_ouvre_ferme.cpp
 		bool ouvreLivre(std::string, bool);
+		void valideFavoris();
 		void fermeLivre();
 	// lc_ajoute.cpp
 		bool ajoutCompte();

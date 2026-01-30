@@ -27,10 +27,10 @@ bool LivreComptable::nouvelleTransaction(bool favorite) {
 
 	//	Implémentation de Description
 	std::cout << "-------------------------------------------------------------------------------" << std::endl;
-	if (favorite) std::cout << "Une courte description \n[0 ou enter pour annuler]: " << std::flush;
-	else std::cout << "Une courte description ou @, pour appeler une transaction favorite\n"
-															"[0 ou enter pour annuler]: " << std::flush;
-	line_read = readline("");
+	if (favorite) line_read = readline("Une courte description \n[0 ou enter pour annuler]: ");
+	else line_read = readline("Une courte description ou @, pour appeler une transaction favorite\n"
+															"[0 ou enter pour annuler]: ");
+	
 	reponse = line_read;
 	free(line_read);
 

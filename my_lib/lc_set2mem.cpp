@@ -22,20 +22,6 @@ int LivreComptable::setCategories2mem(char **argv) {
 
 	return 0;
 }
-int LivreComptable::setFavorites2mem(char ** argv) {
-	struct transaction t;
-
-	t.Date = argv[0];
-	t.Description = argv[1];
-	t.Type = argv[2];
-	t.Compte = argv[3];
-	t.Catégorie = argv[4];
-	t.Montant = argv[5];
-
-	FAV_TRANSACTIONS.push_back(t);
-
-	return 0;
-}
 int LivreComptable::setTransactions2mem(char ** argv) {
 	struct transaction t;
 
@@ -47,6 +33,20 @@ int LivreComptable::setTransactions2mem(char ** argv) {
 	t.Montant = argv[5];
 
 	TRANSACTIONS.push_back(t);
+
+	return 0;
+}
+int LivreComptable::setFavorites2mem(char ** argv) {
+	struct transaction t;
+
+	t.Date = argv[0];
+	t.Description = argv[1];
+	t.Type = argv[2];
+	t.Compte = argv[3];
+	t.Catégorie = argv[4];
+	t.Montant = argv[5];
+
+	FAV_TRANSACTIONS.push_back(t);
 
 	return 0;
 }
